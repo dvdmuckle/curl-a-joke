@@ -1,0 +1,8 @@
+*
+!.gitignore
+!*.md
+!*.go
+!*.yml
+!Dockerfile
+!*.sh
+!*.db
