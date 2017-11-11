@@ -34,7 +34,7 @@ func requestjoke(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, randjoke())
 }
 func main() {
-	dbPtr := flag.String("jokedb", "jokes.db", "Location to the jokes database")
+	dbPtr := flag.String("jokesdb", "jokes.db", "Location to the jokes database")
 	portPtr := flag.Int("port", 8080, "Port for server")
 	flag.Parse()
 	dbFile = *dbPtr
@@ -44,5 +44,6 @@ func main() {
 		return
 	}
 	http.HandleFunc("/", requestjoke)
-	http.ListenAndServe(jokePort, nil)
+	err := http.ListenAndServe(jokePort, nil)
+	fmt.Fprintln(os.Stderr, err)
 }
