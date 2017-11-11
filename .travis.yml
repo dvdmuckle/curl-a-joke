@@ -5,5 +5,4 @@ go:
 jobs:
         include:
                 - stage: deploy
-                  go: 1.8
                   script: bash .deploy.sh
