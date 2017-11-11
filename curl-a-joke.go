@@ -39,6 +39,10 @@ func main() {
 	flag.Parse()
 	dbFile = *dbPtr
 	jokePort = fmt.Sprintf(":%d", *portPtr)
+	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
+		fmt.Fprintln(os.Stderr, err)
+		return
+	}
 	http.HandleFunc("/", requestjoke)
 	http.ListenAndServe(jokePort, nil)
 }

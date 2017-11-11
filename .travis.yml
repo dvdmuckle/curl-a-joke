@@ -2,9 +2,8 @@ language: go
 go:
         - '1.6'
         - '1.8'
-script:
-        - go env
-        - go get -v ./...
-        - go build
-after_success:
-        - bash .deploy.sh
+jobs:
+        include:
+                - stage: deploy
+                  go: 1.8
+                  script: bash .deploy.sh
