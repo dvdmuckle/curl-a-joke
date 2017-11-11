@@ -16,7 +16,7 @@ var dbFile string
 var jokePort string
 
 func requestjoke(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "There should be a joke here. Not yet, but soon.")
+	fmt.Fprintln(w, "There should be a joke here. Not yet, but soon.")
 }
 func main() {
 	dbPtr := flag.String("jokedb", "jokes.db", "Location to the jokes database")
