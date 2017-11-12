@@ -25,7 +25,7 @@ This will use the default port and jokes database. If you would like to supply y
 ```bash
 docker run -d -p 8080:8080 -v /home/dvdmuckle/curl-a-joke:/root/curl-a-joke --name curl-a-joke dvdmuckle/curl-a-joke --jokesdb /root/curl-a-joke/jokes.db
 ```
-The port can also be speicified in a similar manner, however this can be more easily achieved with using Docker's `-p` option.
+The port can also be speicified in a similar manner, however this can be more easily achieved using Docker's `-p` option.
 
 ### TODO
 
