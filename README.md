@@ -10,7 +10,7 @@ go get -u github.com/dvdmuckle/curl-a-joke
 ```
 Run `$GOPATH/bin/curl-a-joke`
 
-By defualt `curl-a-joke` will expect the jokes database in your current working directory. This behavior can be changed by passing a path to the jokes database with the `--jokesdb` flag. The default port, 8080, can also be changed with the `--port` flag. If you create a new jokes database, be sure to follow the same schema as the example jokes database.
+By default `curl-a-joke` will expect the jokes database in your current working directory. This behavior can be changed by passing a path to the jokes database with the `--jokesdb` flag. The default port, 8080, can also be changed with the `--port` flag. If you create a new jokes database, be sure to follow the same schema as the example jokes database.
 
 You can now `curl` the jokes service. If you're running it on your local machine, `curl localhost:8080` will give you a random joke.
 
@@ -20,7 +20,7 @@ You can now `curl` the jokes service. If you're running it on your local machine
 docker run -d -p 8080:8080 --name curl-a-joke dvdmuckle/curl-a-joke
 ```
 
-This will use the default port and jokes database. If you would like to supply your own jokes database, you can mount a volume with the database,  and use the `--joksedb` flag to specify its location within the container.
+This will use the default port and jokes database. If you would like to supply your own jokes database, you can mount a volume with the database,  and use the `--jokesdb` flag to specify its location within the container.
 
 ```bash
 docker run -d -p 8080:8080 -v /home/dvdmuckle/curl-a-joke:/root/curl-a-joke --name curl-a-joke dvdmuckle/curl-a-joke --jokesdb /root/curl-a-joke/jokes.db
