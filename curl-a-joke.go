@@ -41,7 +41,7 @@ func setup(db *string, port *int) {
 	jokePort = fmt.Sprintf(":%d", *port)
 	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
 		fmt.Fprintln(os.Stderr, err)
-		return
+		os.Exit(1)
 	}
 	rand.Seed(time.Now().UTC().UnixNano())
 }
