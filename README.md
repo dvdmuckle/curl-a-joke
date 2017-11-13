@@ -29,6 +29,8 @@ The port can also be speicified in a similar manner, however this can be more ea
 
 ### TODO
 
+* Parse jokes from json and automigrate to jokes database
+
 * Allow for easy addition of jokes via a command line option
 
 * Allow for POSTing new jokes given user authentication
