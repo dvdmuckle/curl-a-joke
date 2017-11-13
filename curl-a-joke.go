@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -17,7 +18,7 @@ type Joke struct {
 }
 
 var dbFile string
-var jokePort string
+var jokePort int
 
 func randjoke() (joke string) {
 	db, err := gorm.Open("sqlite3", dbFile)
@@ -38,7 +39,7 @@ func requestjoke(w http.ResponseWriter, r *http.Request) {
 
 func setup(db *string, port *int) {
 	dbFile = *db
-	jokePort = fmt.Sprintf(":%d", *port)
+	jokePort = *port
 	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -52,6 +53,6 @@ func main() {
 	flag.Parse()
 	setup(dbPtr, portPtr)
 	http.HandleFunc("/", requestjoke)
-	err := http.ListenAndServe(jokePort, nil)
+	err := http.ListenAndServe(":"+strconv.Itoa(jokePort), nil)
 	fmt.Fprintln(os.Stderr, err)
 }
