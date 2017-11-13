@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "t1nayUUugNoJWht7p4cbKyWuk8Q=",
+			"path": "github.com/gorilla/handlers",
+			"revision": "90663712d74cb411cbef281bc1e08c19d1a76145",
+			"revisionTime": "2017-11-01T17:43:35Z"
+		},
+		{
 			"checksumSHA1": "KBZAPkgG/bO26yf2KYKLZPyQw9k=",
 			"path": "github.com/jinzhu/gorm",
 			"revision": "0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e",
@@ -29,8 +35,8 @@
 		{
 			"checksumSHA1": "GtamqiJoL7PGHsN454AoffBFMa8=",
 			"path": "golang.org/x/net/context",
-			"revision": "a337091b0525af65de94df2eb7e98bd9962dcbe2",
-			"revisionTime": "2016-10-09T20:39:03Z"
+			"revision": "c73622c77280266305273cb545f54516ced95b93",
+			"revisionTime": "2017-06-11T01:16:46Z"
 		}
 	],
 	"rootPath": "github.com/dvdmuckle/curl-a-joke"
