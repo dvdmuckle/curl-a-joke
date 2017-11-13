@@ -19,10 +19,7 @@ type Joke struct {
 	Joke string
 }
 
-var dbFile string
-var jokePort int
-
-func randjoke() (joke string) {
+func randjoke(dbFile string) (joke string) {
 	db, err := gorm.Open("sqlite3", dbFile)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -35,11 +32,11 @@ func randjoke() (joke string) {
 	return j.Joke
 }
 
-func requestjoke(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, randjoke())
+func requestjoke(w http.ResponseWriter, r *http.Request, dbFile string) {
+	fmt.Fprintln(w, randjoke(dbFile))
 }
 
-func setup(db *string, port *int) {
+func setup(db *string, port *int) (dbFile string, jokePort int) {
 	dbFile = *db
 	jokePort = *port
 	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
@@ -47,14 +44,17 @@ func setup(db *string, port *int) {
 		os.Exit(1)
 	}
 	rand.Seed(time.Now().UTC().UnixNano())
+	return dbFile, jokePort
 }
 
 func main() {
 	dbPtr := flag.String("jokesdb", "jokes.db", "Location to the jokes database")
 	portPtr := flag.Int("port", 8080, "Port for server")
 	flag.Parse()
-	setup(dbPtr, portPtr)
-	http.HandleFunc("/", requestjoke)
+	dbFile, jokePort := setup(dbPtr, portPtr)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		requestjoke(w, r, dbFile)
+	})
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(jokePort),
 		handlers.LoggingHandler(os.Stdout, http.DefaultServeMux)))
 }
