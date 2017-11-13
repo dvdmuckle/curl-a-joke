@@ -3,8 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/gorilla/handlers"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -53,6 +55,6 @@ func main() {
 	flag.Parse()
 	setup(dbPtr, portPtr)
 	http.HandleFunc("/", requestjoke)
-	err := http.ListenAndServe(":"+strconv.Itoa(jokePort), nil)
-	fmt.Fprintln(os.Stderr, err)
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(jokePort),
+		handlers.LoggingHandler(os.Stdout, http.DefaultServeMux)))
 }
