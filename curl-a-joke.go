@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"time"
 )
 
 type Joke struct {
@@ -30,19 +31,26 @@ func randjoke() (joke string) {
 	j := jokes[rand.Intn(len(jokes))]
 	return j.Joke
 }
+
 func requestjoke(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, randjoke())
 }
-func main() {
-	dbPtr := flag.String("jokesdb", "jokes.db", "Location to the jokes database")
-	portPtr := flag.Int("port", 8080, "Port for server")
-	flag.Parse()
-	dbFile = *dbPtr
-	jokePort = fmt.Sprintf(":%d", *portPtr)
+
+func setup(db *string, port *int) {
+	dbFile = *db
+	jokePort = fmt.Sprintf(":%d", *port)
 	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
 		fmt.Fprintln(os.Stderr, err)
 		return
 	}
+	rand.Seed(time.Now().UTC().UnixNano())
+}
+
+func main() {
+	dbPtr := flag.String("jokesdb", "jokes.db", "Location to the jokes database")
+	portPtr := flag.Int("port", 8080, "Port for server")
+	flag.Parse()
+	setup(dbPtr, portPtr)
 	http.HandleFunc("/", requestjoke)
 	err := http.ListenAndServe(jokePort, nil)
 	fmt.Fprintln(os.Stderr, err)
