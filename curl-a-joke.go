@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "encoding/json"
 	"flag"
 	"fmt"
 	"github.com/gorilla/handlers"
@@ -17,6 +18,9 @@ import (
 type Joke struct {
 	ID   uint `gorm:"primary_key"`
 	Joke string
+}
+type Jsonjoke struct {
+	Jokes []string `json:"jokes"`
 }
 
 func randjoke(dbFile string) (joke string) {
