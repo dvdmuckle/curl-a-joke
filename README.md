@@ -1,5 +1,5 @@
 # curl-a-joke
-[![Build Status](https://travis-ci.org/dvdmuckle/curl-a-joke.svg?branch=master)](https://travis-ci.org/dvdmuckle/curl-a-joke)[![Heroku](https://heroku-badge.herokuapp.com/?app=curl-a-joke)]
+[![Build Status](https://travis-ci.org/dvdmuckle/curl-a-joke.svg?branch=master)](https://travis-ci.org/dvdmuckle/curl-a-joke)![Heroku](https://heroku-badge.herokuapp.com/?app=curl-a-joke)
 
 The Woz's dial-a-joke, for the 21st century!
 
