@@ -5,6 +5,5 @@
 !*.yml
 !Dockerfile
 !*.sh
-!*.db
 !vendor/*
 !*.json

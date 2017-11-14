@@ -17,8 +17,8 @@ import (
 )
 
 type Joke struct {
-	ID   uint `gorm:"primary_key"`
-	Joke string
+	ID   uint   `gorm:"primary_key"`
+	Joke string `gorm:"not null;unique"`
 }
 type Jsonjoke struct {
 	Jokes []string `json:"jokes"`
@@ -37,7 +37,7 @@ func randjoke(dbFile string) (joke string) {
 	return j.Joke
 }
 
-func parsejson(jsnFile string) (jokes []string) {
+func parsejson(jsnFile string) (jokes Jsonjoke) {
 	fmt.Println("Parsing json...")
 	file, err := ioutil.ReadFile(jsnFile)
 	if err != nil {
@@ -63,16 +63,15 @@ func setup(db *string, port *int, jsn *string) (dbFile string, jokePort int, jsn
 	rand.Seed(time.Now().UTC().UnixNano())
 	return dbFile, jokePort, jsnFile
 }
-func dbSetup(dbFile string, newJokes []string) {
+func dbSetup(dbFile string, newJokes Jsonjoke) {
 	fmt.Println("Migrating to database...")
 	db, err := gorm.Open("sqlite3", dbFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 	db.AutoMigrate(&Joke{})
-	for _, elm := range newJokes {
+	for _, elm := range newJokes.Jokes {
 		newrec := Joke{Joke: elm}
-		fmt.Println(newrec)
 		db.Create(&newrec)
 	}
 	db.Close()
