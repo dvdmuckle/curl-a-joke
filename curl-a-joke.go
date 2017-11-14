@@ -1,12 +1,13 @@
 package main
 
 import (
-	_ "encoding/json"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/gorilla/handlers"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
@@ -36,32 +37,60 @@ func randjoke(dbFile string) (joke string) {
 	return j.Joke
 }
 
+func parsejson(jsnFile string) (jokes []string) {
+	fmt.Println("Parsing json...")
+	file, err := ioutil.ReadFile(jsnFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	json.Unmarshal(file, &jokes)
+	return jokes
+}
+
 func requestjoke(w http.ResponseWriter, r *http.Request, dbFile string) {
 	fmt.Fprintln(w, randjoke(dbFile))
 }
 
-func setup(db *string, port *int) (dbFile string, jokePort int) {
+func setup(db *string, port *int, jsn *string) (dbFile string, jokePort int, jsnFile string) {
 	dbFile = *db
 	jokePort = *port
-	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+	jsnFile = *jsn
+	if dbFile != "jokes.db" {
+		if _, err := os.Stat(dbFile); os.IsNotExist(err) {
+			log.Fatal(err)
+		}
 	}
 	rand.Seed(time.Now().UTC().UnixNano())
-	return dbFile, jokePort
+	return dbFile, jokePort, jsnFile
+}
+func dbSetup(dbFile string, newJokes []string) {
+	fmt.Println("Migrating to database...")
+	db, err := gorm.Open("sqlite3", dbFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db.AutoMigrate(&Joke{})
+	for _, elm := range newJokes {
+		newrec := Joke{Joke: elm}
+		fmt.Println(newrec)
+		db.Create(&newrec)
+	}
+	db.Close()
 }
 
 func main() {
 	dbPtr := flag.String("jokesdb", "jokes.db", "Location to the jokes database")
+	jsnPtr := flag.String("jokesjsn", "jokes.json", "Location to the jokes json file")
 	portPtr := flag.Int("port", 8080, "Port for server")
 	flag.Parse()
-	dbFile, jokePort := setup(dbPtr, portPtr)
+	dbFile, jokePort, jsnFile := setup(dbPtr, portPtr, jsnPtr)
+	newJokes := parsejson(jsnFile)
+	dbSetup(dbFile, newJokes)
 	if os.Getenv("PORT") != "" {
 		var err error
 		jokePort, err = strconv.Atoi(os.Getenv("PORT"))
 		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			os.Exit(1)
+			log.Fatal(err)
 		}
 	}
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
