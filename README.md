@@ -24,10 +24,10 @@ You can now `curl` the jokes service. If you're running it on your local machine
 docker run -d -p 8080:8080 --name curl-a-joke dvdmuckle/curl-a-joke
 ```
 
-This will use the default port and jokes database. If you would like to supply your own jokes database, you can mount a volume with the database,  and use the `--jokesdb` flag to specify its location within the container.
+This will use the default port, `jokes.json`, and database location. If you would like to supply your own `jokes.json`, you can mount a volume with the json,  and use the `--jokesjsn` flag to specify its location within the container.
 
 ```bash
-docker run -d -p 8080:8080 -v /home/dvdmuckle/curl-a-joke:/root/curl-a-joke --name curl-a-joke dvdmuckle/curl-a-joke --jokesdb /root/curl-a-joke/jokes.db
+docker run -d -p 8080:8080 -v /home/dvdmuckle/curl-a-joke:/root/curl-a-joke --name curl-a-joke dvdmuckle/curl-a-joke --jokejson /root/curl-a-joke/jokes.json
 ```
 The port can also be speicified in a similar manner, however this can be more easily achieved using Docker's `-p` option.
 
