@@ -52,6 +52,14 @@ func main() {
 	portPtr := flag.Int("port", 8080, "Port for server")
 	flag.Parse()
 	dbFile, jokePort := setup(dbPtr, portPtr)
+	if os.Getenv("PORT") != "" {
+		var err error
+		jokePort, err = strconv.Atoi(os.Getenv("PORT"))
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+	}
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		requestjoke(w, r, dbFile)
 	})
