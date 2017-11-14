@@ -55,11 +55,6 @@ func setup(db *string, port *int, jsn *string) (dbFile string, jokePort int, jsn
 	dbFile = *db
 	jokePort = *port
 	jsnFile = *jsn
-	if dbFile != "jokes.db" {
-		if _, err := os.Stat(dbFile); os.IsNotExist(err) {
-			log.Fatal(err)
-		}
-	}
 	rand.Seed(time.Now().UTC().UnixNano())
 	return dbFile, jokePort, jsnFile
 }
