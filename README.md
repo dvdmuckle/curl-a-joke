@@ -14,7 +14,7 @@ go get -u github.com/dvdmuckle/curl-a-joke
 ```
 Run `$GOPATH/bin/curl-a-joke`
 
-By default `curl-a-joke` will expect the jokes database in your current working directory. This behavior can be changed by passing a path to the jokes database with the `--jokesdb` flag. If you create a new jokes database, be sure to follow the same schema as the example jokes database. The default port, 8080, can be changed with the `--port` flag. This flag can also take the form of an environment variable `PORT`. This is mostly for Heroku deployment, and will override the `--port` option if both are present.
+By default `curl-a-joke` will expect the jokes database in your current working directory. This behavior can be changed by passing a path to the jokes database with the `--jokesdb`. This database will be populated automatically, and by default will be populated by jokes in the `jokes.json`, which is also expected in the current working directory. This can be changed by passing a path to the json file with `--jokesjsn`. The default port, 8080, can be changed with the `--port` flag. This flag can also take the form of an environment variable `PORT`. This is mostly for Heroku deployment, and will override the `--port` option if both are present.
 
 You can now `curl` the jokes service. If you're running it on your local machine, `curl localhost:8080` will give you a random joke.
 
@@ -32,9 +32,5 @@ docker run -d -p 8080:8080 -v /home/dvdmuckle/curl-a-joke:/root/curl-a-joke --na
 The port can also be speicified in a similar manner, however this can be more easily achieved using Docker's `-p` option.
 
 ### TODO
-
-* Parse jokes from json and automigrate to jokes database
-
-* Allow for easy addition of jokes via a command line option
 
 * Allow for POSTing new jokes given user authentication
