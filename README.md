@@ -17,7 +17,7 @@ _|        _|    _|  _|    _|  _|              _|    _|              _|    _|  _|
                                                                                                             
                                                                                                             
 ```
-[![Build Status](https://travis-ci.org/dvdmuckle/curl-a-joke.svg?branch=master)](https://travis-ci.org/dvdmuckle/curl-a-joke)[![Heroku](https://heroku-badge.herokuapp.com/?app=curl-a-joke)](https://curl-a-joke.herokuapp.com)
+[![Build Status](https://travis-ci.org/dvdmuckle/curl-a-joke.svg?branch=master)](https://travis-ci.org/dvdmuckle/curl-a-joke)[![Heroku](https://heroku-badge.herokuapp.com/?app=curl-a-joke&style=flat)](https://curl-a-joke.herokuapp.com)
 
 The Woz's dial-a-joke, for the 21st century!
 
