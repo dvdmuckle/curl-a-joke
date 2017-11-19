@@ -51,4 +51,6 @@ The port can also be speicified in a similar manner, however this can be more ea
 
 ### TODO
 
-* Allow for POSTing new jokes given user authentication
+* Allow for user registration and request for keys to submit jokes
+
+* Allow for POSTing new jokes given user registration
