@@ -87,6 +87,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}
+	fmt.Printf("Serving on port %d\n", jokePort)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		requestjoke(w, r, dbFile)
 	})
