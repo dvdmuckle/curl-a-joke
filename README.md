@@ -1,5 +1,23 @@
-# curl-a-joke
-[![Build Status](https://travis-ci.org/dvdmuckle/curl-a-joke.svg?branch=master)](https://travis-ci.org/dvdmuckle/curl-a-joke)[![Heroku](https://heroku-badge.herokuapp.com/?app=curl-a-joke)](https://curl-a-joke.herokuapp.com)
+```
+    ____ _    ______  __  _____  __________ __ __    ______
+   / __ \ |  / / __ \/  |/  / / / / ____/ //_// /   / ____/
+  / / / / | / / / / / /|_/ / / / / /   / ,<  / /   / __/   
+ / /_/ /| |/ / /_/ / /  / / /_/ / /___/ /| |/ /___/ /___   
+/_____/ |___/_____/_/  /_/\____/\____/_/ |_/_____/_____/   
+                                                           
++-+-+-+-+-+-+-+-+
+|P|R|E|S|E|N|T|S|
++-+-+-+-+-+-+-+-+
+                                                                                                            
+  _|_|_|  _|    _|  _|_|_|    _|                _|_|                      _|    _|_|    _|    _|  _|_|_|_|  
+_|        _|    _|  _|    _|  _|              _|    _|                    _|  _|    _|  _|  _|    _|        
+_|        _|    _|  _|_|_|    _|  _|_|_|_|_|  _|_|_|_|  _|_|_|_|_|        _|  _|    _|  _|_|      _|_|_|    
+_|        _|    _|  _|    _|  _|              _|    _|              _|    _|  _|    _|  _|  _|    _|        
+  _|_|_|    _|_|    _|    _|  _|_|_|_|        _|    _|                _|_|      _|_|    _|    _|  _|_|_|_|  
+                                                                                                            
+                                                                                                            
+```
+[![Build Status](https://travis-ci.org/dvdmuckle/curl-a-joke.svg?branch=master)](https://travis-ci.org/dvdmuckle/curl-a-joke)[![Heroku](https://heroku-badge.herokuapp.com/?app=curl-a-joke&svg=1)](https://curl-a-joke.herokuapp.com)
 
 The Woz's dial-a-joke, for the 21st century!
 
@@ -33,4 +51,6 @@ The port can also be speicified in a similar manner, however this can be more ea
 
 ### TODO
 
-* Allow for POSTing new jokes given user authentication
+* Allow for user registration and request for keys to submit jokes
+
+* Allow for POSTing new jokes given user registration
