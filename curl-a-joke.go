@@ -47,7 +47,27 @@ func parsejson(jsnFile string) (jokes Jsonjoke) {
 	return jokes
 }
 
+func postJoke(w http.ResponseWriter, r *http.Request, dbFile string) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error reading body", http.StatusInternalServerError)
+	}
+	db, err := gorm.Open("sqlite3", dbFile)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error opening database", http.StatusInternalServerError)
+	}
+	defer db.Close()
+	db.Create(&Joke{Joke: string(body)})
+}
+
 func requestjoke(w http.ResponseWriter, r *http.Request, dbFile string) {
+	if r.Method == "POST" {
+		fmt.Fprintln(w, "Posting joke...")
+		postJoke(w, r, dbFile)
+		return
+	}
 	fmt.Fprintln(w, randjoke(dbFile))
 }
 
