@@ -59,6 +59,7 @@ func postJoke(w http.ResponseWriter, r *http.Request, dbFile string) {
 		http.Error(w, "Error opening database", http.StatusInternalServerError)
 	}
 	defer db.Close()
+	log.Printf("Posting joke: %s\n", string(body))
 	db.Create(&Joke{Joke: string(body)})
 }
 
