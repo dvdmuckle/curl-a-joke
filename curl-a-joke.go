@@ -63,13 +63,17 @@ func postJoke(w http.ResponseWriter, r *http.Request, dbFile string) {
 	db.Create(&Joke{Joke: string(body)})
 }
 
-func requestjoke(w http.ResponseWriter, r *http.Request, dbFile string) {
-	if r.Method == "POST" {
+func serveRequest(w http.ResponseWriter, r *http.Request, dbFile string) {
+	switch r.Method {
+	case "POST":
 		fmt.Fprintln(w, "Posting joke...")
 		postJoke(w, r, dbFile)
-		return
+	case "GET":
+		fmt.Fprintln(w, randjoke(dbFile))
+
+	default:
+		fmt.Fprintln(w, "Method not supported!")
 	}
-	fmt.Fprintln(w, randjoke(dbFile))
 }
 
 func setup(db *string, port *int, jsn *string) (dbFile string, jokePort int, jsnFile string) {
@@ -110,7 +114,7 @@ func main() {
 	}
 	fmt.Printf("Serving on port %d\n", jokePort)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		requestjoke(w, r, dbFile)
+		serveRequest(w, r, dbFile)
 	})
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(jokePort),
 		handlers.LoggingHandler(os.Stdout, http.DefaultServeMux)))
