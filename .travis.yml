@@ -1,11 +1,7 @@
 language: go
 go:
-        - '1.6'
         - '1.8'
-script: 
-        - $GOPATH/bin/curl-a-joke &
-        - sleep 5
-        - curl localhost:8080
+        - '1.9'
 jobs:
         include:
                 - stage: deploy

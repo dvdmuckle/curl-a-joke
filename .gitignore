@@ -7,3 +7,4 @@
 !*.sh
 !vendor/*
 !*.json
+!.buildkite/
