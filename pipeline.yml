@@ -1,0 +1,6 @@
+steps:
+  - command: ""
+
+  - command: "docker build -t dvdmuckle/curl-a-joke:armhf ."
+
+  - command: "docker push dvdmuckle/curl-a-joke:armhf"
