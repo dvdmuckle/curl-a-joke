@@ -1,4 +1,4 @@
 steps:
-  - command: "docker build -t dvdmuckle/curl-a-joke:testing-armhf ."
+  - command: "docker build -t dvdmuckle/curl-a-joke:testing-armhf --no-cache ."
 
   - command: "docker push dvdmuckle/curl-a-joke:testing-armhf"
