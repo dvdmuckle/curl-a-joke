@@ -20,6 +20,12 @@ type Joke struct {
 	ID   uint   `gorm:"primary_key"`
 	Joke string `gorm:"not null;unique"`
 }
+
+type Tokens struct {
+	ID    uint   `gorm:"primary_key"`
+	Token string `gorm:"not null;unique"`
+}
+
 type Jsonjoke struct {
 	Jokes []string `json:"jokes"`
 }
