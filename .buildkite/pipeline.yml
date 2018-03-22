@@ -1,5 +1,5 @@
 steps:
-  - command: "docker pull golang"
+  - command: "docker pull golang && docker pull ubuntu:xenial"
   - command: "docker build -t dvdmuckle/curl-a-joke:armhf --no-cache ."
   - command: "docker tag dvdmuckle/curl-a-joke:armhf dvdmuckle/curl-a-joke:armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
   - command: "docker push dvdmuckle/curl-a-joke:armhf"
