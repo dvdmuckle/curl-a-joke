@@ -1,7 +1,25 @@
 steps:
-  - command: "docker pull golang && docker pull ubuntu:xenial"
-  - command: "docker build -t dvdmuckle/curl-a-joke:testing-armhf --no-cache ."
-  - command: "docker tag dvdmuckle/curl-a-joke:testing-armhf dvdmuckle/curl-a-joke:testing-armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
-  - command: "docker push dvdmuckle/curl-a-joke:testing-armhf"
-  - command: "docker push dvdmuckle/curl-a-joke:testing-armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
-  - command: "kubectl set -n testing image deployment/curl-a-joke-testing curl-a-joke-testing=dvdmuckle/curl-a-joke:testing-armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
+  - label: "🔨 Build"
+    branches: "master"
+    command:
+      -  "docker pull golang && docker pull ubuntu:xenial"
+      -  "docker build -t dvdmuckle/curl-a-joke:armhf -t dvdmuckle/curl-a-joke:armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)  ."
+  - wait
+  - label: "Deploy"
+    branches: "master"
+    command:
+      - "docker push dvdmuckle/curl-a-joke:armhf && docker push dvdmuckle/curl-a-joke:armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
+      - "kubectl set image deployment/curl-a-joke curl-a-joke=dvdmuckle/curl-a-joke:armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
+
+  - label: "🔨 Build"
+    branches: "testing"
+    command:
+      -  "docker pull golang:alpine && docker pull alpine"
+      -  "docker build -t dvdmuckle/curl-a-joke:armhf-testing -t dvdmuckle/curl-a-joke:armhf-testing-$(echo $BUILDKITE_COMMIT | cut -c1-7)  ."
+  - wait
+  - label: "Deploy"
+    branches: "testing"
+    command:
+      - "docker push dvdmuckle/curl-a-joke:armhf-testing && docker push dvdmuckle/curl-a-joke:armhf-testing-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
+      - "kubectl set -n testing image deployment/curl-a-joke-testing curl-a-joke-testing=dvdmuckle/curl-a-joke:armhf-testing-$(echo $BUILDKITE_COMMIT | cut -c1-7)"
+
