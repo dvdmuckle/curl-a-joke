@@ -1,7 +1,8 @@
 version: '3'
 
 services:
-  web:
+  curl-a-joke:
     ports:
             - "8080:8080"
-    image: dvdmuckle/curl-a-joke
+    build:
+      context: .
