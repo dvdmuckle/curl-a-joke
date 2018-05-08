@@ -2,7 +2,7 @@ steps:
   - label: "🔨 Build"
     branches: "master"
     command:
-      -  "docker pull golang && docker pull ubuntu:xenial"
+      -  "docker pull golang && docker pull ubuntu:bionic"
       -  "docker build -t dvdmuckle/curl-a-joke:armhf -t dvdmuckle/curl-a-joke:armhf-$(echo $BUILDKITE_COMMIT | cut -c1-7)  ."
   - wait
   - label: "Deploy"
@@ -14,7 +14,7 @@ steps:
   - label: "🔨 Build"
     branches: "testing"
     command:
-      -  "docker pull golang:alpine && docker pull alpine"
+      -  "docker pull golang && docker pull ubuntu:bionic"
       -  "docker build -t dvdmuckle/curl-a-joke:armhf-testing -t dvdmuckle/curl-a-joke:armhf-testing-$(echo $BUILDKITE_COMMIT | cut -c1-7)  ."
   - wait
   - label: "Deploy"
