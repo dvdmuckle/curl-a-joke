@@ -20,6 +20,12 @@ type Joke struct {
 	ID   uint   `gorm:"primary_key"`
 	Joke string `gorm:"not null;unique"`
 }
+
+type Tokens struct {
+	ID    uint   `gorm:"primary_key"`
+	Token string `gorm:"not null;unique"`
+}
+
 type Jsonjoke struct {
 	Jokes []string `json:"jokes"`
 }
@@ -47,8 +53,33 @@ func parsejson(jsnFile string) (jokes Jsonjoke) {
 	return jokes
 }
 
-func requestjoke(w http.ResponseWriter, r *http.Request, dbFile string) {
-	fmt.Fprintln(w, randjoke(dbFile))
+func postJoke(w http.ResponseWriter, r *http.Request, dbFile string) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error reading body", http.StatusInternalServerError)
+	}
+	db, err := gorm.Open("sqlite3", dbFile)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error opening database", http.StatusInternalServerError)
+	}
+	defer db.Close()
+	log.Printf("Posting joke: %s\n", string(body))
+	db.Create(&Joke{Joke: string(body)})
+}
+
+func serveRequest(w http.ResponseWriter, r *http.Request, dbFile string) {
+	switch r.Method {
+	case "POST":
+		fmt.Fprintln(w, "Posting joke...")
+		postJoke(w, r, dbFile)
+	case "GET":
+		fmt.Fprintln(w, randjoke(dbFile))
+
+	default:
+		fmt.Fprintln(w, "Method not supported!")
+	}
 }
 
 func setup(db *string, port *int, jsn *string) (dbFile string, jokePort int, jsnFile string) {
@@ -89,7 +120,7 @@ func main() {
 	}
 	fmt.Printf("Serving on port %d\n", jokePort)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		requestjoke(w, r, dbFile)
+		serveRequest(w, r, dbFile)
 	})
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(jokePort),
 		handlers.LoggingHandler(os.Stdout, http.DefaultServeMux)))
