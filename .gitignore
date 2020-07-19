@@ -8,3 +8,4 @@
 !vendor/*
 !*.json
 !.buildkite/
+!go.mod
